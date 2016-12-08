@@ -13,6 +13,8 @@ stage.interactive = true;
 
 var lines = []
 
+var circles = {}
+
 var circleCounter = 0;
 
 function Circle(x, y) {
@@ -43,8 +45,12 @@ function Circle(x, y) {
     .on('mousemove', onDragMove)
     .on('touchmove', onDragMove);
 
-  var label = new PIXI.Text(circleCounter);
+  container.idx = circleCounter;
   circleCounter += 1;
+
+  circles[container.idx] = container;
+
+  var label = new PIXI.Text(container.idx);
   container.addChild(label);
   label.position.x = 10
   label.scale.x = 0.5;
@@ -80,6 +86,13 @@ function Line(node1, node2) {
   line.zIndex = -1;
 
   return line;
+}
+
+function AddLine(index1, index2) {
+  // Find two circles by their indexes, add a line connecting them.
+  var c1 = circles[index1];
+  var c2 = circles[index2];
+  Line(c1, c2);
 }
 
 function ccw(A,B,C) {
@@ -136,8 +149,6 @@ function CircleOfCircles(n) {
   
 }
 
-CircleOfCircles(10);
-redrawLines();
 
 
 function redrawLines() {
@@ -166,8 +177,6 @@ function redrawLines() {
 }
 
 
-// run the render loop
-animate();
 
 function animate() {
   //circle.position.x = circle.position.x + 1;
@@ -176,3 +185,22 @@ function animate() {
   renderer.render(stage);
   requestAnimationFrame(animate);
 }
+
+// main
+CircleOfCircles(6);
+
+AddLine(0, 2);
+AddLine(2, 4);
+AddLine(4, 0);
+
+AddLine(1, 3);
+AddLine(3, 5);
+AddLine(5, 1);
+
+AddLine(1, 4);
+AddLine(2, 5);
+
+redrawLines();
+
+// run the render loop
+animate();

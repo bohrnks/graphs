@@ -44,6 +44,9 @@ function Circle(x, y) {
 function Line(node1, node2) {
   var line = new PIXI.Graphics();
 
+  log(11111);
+  log(node1.toGlobal(new PIXI.Point()));
+  log.node1.position;
 
   // draw a line
   line.lineStyle(3, 0x9900cc, 1);
@@ -55,8 +58,8 @@ function Line(node1, node2) {
   return line;
 }
 
-var c1 = Circle(100, 60);
-var c2 = Circle(0, -60);
+var c1 = Circle(0, 0);
+var c2 = Circle(100, 0);
 
 var line = Line(c1, c2);
 

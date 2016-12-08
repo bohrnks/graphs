@@ -21,7 +21,7 @@ function Circle(x, y) {
   // draw a circle
   circle.lineStyle(2, 0x0033cc);
   circle.beginFill(0xffff66, 0.9);
-  circle.drawCircle(0, 0, radius=10);
+  circle.drawCircle(0, 0, radius=7);
   circle.endFill();
 
   container.position.x = x;
@@ -71,8 +71,13 @@ function Line(node1, node2) {
 
 var c1 = Circle(300, 300);
 var c2 = Circle(400, 300);
+var c3 = Circle(400, 400);
+var c4 = Circle(300, 400);
 
-var line = Line(c1, c2);
+Line(c1, c2);
+Line(c2, c3);
+Line(c3, c4);
+Line(c4, c1);
 
 function onDragStart(event)
 {

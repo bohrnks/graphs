@@ -13,6 +13,7 @@ stage.interactive = true;
 
 var lines = []
 
+var circleCounter = 0;
 
 function Circle(x, y) {
   var container = new PIXI.Container();
@@ -41,6 +42,13 @@ function Circle(x, y) {
     // events for drag move
     .on('mousemove', onDragMove)
     .on('touchmove', onDragMove);
+
+  var label = new PIXI.Text(circleCounter);
+  circleCounter += 1;
+  container.addChild(label);
+  label.position.x = 10
+  label.scale.x = 0.5;
+  label.scale.y = 0.5;
 
   return container;
 }
@@ -98,43 +106,29 @@ function intersect(line1, line2) {
   return ccw(A,C,D) != ccw(B,C,D) && ccw(A,B,C) != ccw(A,B,D);
 }
 
-var c1 = Circle(300, 300);
-var c2 = Circle(400, 300);
-var c3 = Circle(400, 400);
-var c4 = Circle(300, 400);
+function FourCircles() {
+  var c1 = Circle(300, 300);
+  var c2 = Circle(400, 300);
+  var c3 = Circle(400, 400);
+  var c4 = Circle(300, 400);
 
-var l1 = Line(c1, c2);
-var l2 = Line(c2, c3);
-var l3 = Line(c3, c4);
-var l4 = Line(c4, c1);
-var l5 = Line(c1, c3);
-var l6 = Line(c2, c4);
+  var l1 = Line(c1, c2);
+  var l2 = Line(c2, c3);
+  var l3 = Line(c3, c4);
+  var l4 = Line(c4, c1);
+  var l5 = Line(c1, c3);
+  var l6 = Line(c2, c4);
+}
 
+
+
+function circleOfCircles(n) {
+  
+}
+
+FourCircles()
 redrawLines();
 
-function onDragStart(event)
-{
-  // store a reference to the draggedObject
-  // the reason for this is because of multitouch
-  // we want to track the movement of this particular touch
-  console.log(event);
-  this.draggedObject = event.data;
-  this.startOffset = this.draggedObject.getLocalPosition(this);
-  this.startOffset.x *= this.scale.x
-  this.startOffset.y *= this.scale.y
-  this.alpha = 0.5;
-  this.dragging = true;
-}
-
-function onDragEnd()
-{
-  this.alpha = 1;
-
-  this.dragging = false;
-
-  // set the interaction draggedObject to null
-  this.draggedObject = null;
-}
 
 function redrawLines() {
   // Clear intersect flags
@@ -161,16 +155,6 @@ function redrawLines() {
   }
 }
 
-function onDragMove()
-{
-  if (this.dragging)
-  {
-    var newPosition = this.draggedObject.getLocalPosition(this.parent);
-    this.position.x = (newPosition.x - this.startOffset.x);
-    this.position.y = (newPosition.y - this.startOffset.y);
-    redrawLines();
-  }
-}
 
 // run the render loop
 animate();

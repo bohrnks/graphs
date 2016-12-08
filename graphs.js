@@ -18,7 +18,7 @@ function Circle(x, y) {
 
   // draw a circle
   circle.lineStyle(2, 0x0033cc);
-  circle.beginFill(0xffff66, 0.7);
+  circle.beginFill(0xffff66, 0.9);
   circle.drawCircle(0, 0, radius=10);
   circle.endFill();
 
@@ -59,6 +59,8 @@ function Line(node1, node2) {
   line.endFill();
 
   stage.addChild(line);
+
+  line.zIndex = -1;
   return line;
 }
 
@@ -108,6 +110,8 @@ animate();
 
 function animate() {
   //circle.position.x = circle.position.x + 1;
+  SortByZIndex(stage);
+
   renderer.render(stage);
   requestAnimationFrame(animate);
 }

@@ -122,11 +122,21 @@ function FourCircles() {
 
 
 
-function circleOfCircles(n) {
+function CircleOfCircles(n) {
+  var centerX = 300, centerY = 300;
+  var R = 200
+  for (var i = 0; i < n; i++) {
+    var angle = Math.PI * 2 / n * i;
+
+    var x = centerX + R * Math.sin(angle);
+    var y = centerY - R * Math.cos(angle);
+
+    Circle(x, y);
+  }
   
 }
 
-FourCircles()
+CircleOfCircles(10);
 redrawLines();
 
 

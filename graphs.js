@@ -3,7 +3,7 @@ function log(x) { console.log(x) }
 //log(PIXI)
 
 var renderer = PIXI.autoDetectRenderer(800, 600,
-                                       {backgroundColor : 0x1079ab});
+                                       {backgroundColor : 0x99ccff});
 document.body.appendChild(renderer.view);
 
 // create the root of the scene graph
@@ -41,16 +41,33 @@ function Circle(x, y) {
   return circle;
 }
 
-var circle = Circle(10, 60);
+function Line(node1, node2) {
+  var line = new PIXI.Graphics();
+
+
+  // draw a line
+  line.lineStyle(3, 0x9900cc, 1);
+  line.moveTo(node1.position.x, node1.position.y)
+  line.lineTo(node2.position.x, node2.position.y)
+  line.endFill();
+
+  node1.addChild(line);
+  return line;
+}
+
+var c1 = Circle(100, 60);
+var c2 = Circle(0, -60);
+
+var line = Line(c1, c2);
 
 function onDragStart(event)
 {
-  // store a reference to the data
+  // store a reference to the draggedObject
   // the reason for this is because of multitouch
   // we want to track the movement of this particular touch
   console.log(event);
-  this.data = event.data;
-  this.startOffset = this.data.getLocalPosition(this);
+  this.draggedObject = event.data;
+  this.startOffset = this.draggedObject.getLocalPosition(this);
   this.startOffset.x *= this.scale.x
   this.startOffset.y *= this.scale.y
   this.alpha = 0.5;
@@ -63,15 +80,15 @@ function onDragEnd()
 
   this.dragging = false;
 
-  // set the interaction data to null
-  this.data = null;
+  // set the interaction draggedObject to null
+  this.draggedObject = null;
 }
 
 function onDragMove()
 {
   if (this.dragging)
   {
-    var newPosition = this.data.getLocalPosition(this.parent);
+    var newPosition = this.draggedObject.getLocalPosition(this.parent);
     this.position.x = (newPosition.x - this.startOffset.x);
     this.position.y = (newPosition.y - this.startOffset.y);
   }

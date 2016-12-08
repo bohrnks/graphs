@@ -45,22 +45,23 @@ function Circle(x, y) {
 
 function Line(node1, node2) {
   var line = new PIXI.Graphics();
+  line.node1 = node1;
+  line.node2 = node2;
 
-  log(11111);
-  log(node1.toGlobal(new PIXI.Point()));
-  log(node1.position);
-  log(node2.position);
-  log(node2.toGlobal(new PIXI.Point()));
+  line.redraw = function() {
+    line.clear();
+    // draw a line
+    line.lineStyle(3, 0x9900cc, 1);
+    line.moveTo(line.node1.position.x, line.node1.position.y)
+    line.lineTo(line.node2.position.x, line.node2.position.y)
+    line.endFill();
+  }
 
-  // draw a line
-  line.lineStyle(3, 0x9900cc, 1);
-  line.moveTo(node1.position.x, node1.position.y)
-  line.lineTo(node2.position.x, node2.position.y)
-  line.endFill();
+  line.redraw();
 
   stage.addChild(line);
-
   line.zIndex = -1;
+
   return line;
 }
 

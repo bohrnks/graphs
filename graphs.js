@@ -11,6 +11,8 @@ var stage = new PIXI.Container();
 
 stage.interactive = true;
 
+var lines = []
+
 
 function Circle(x, y) {
   var container = new PIXI.Container();
@@ -47,6 +49,8 @@ function Line(node1, node2) {
   var line = new PIXI.Graphics();
   line.node1 = node1;
   line.node2 = node2;
+
+  lines.push(line);
 
   line.redraw = function() {
     line.clear();
@@ -101,6 +105,11 @@ function onDragMove()
     var newPosition = this.draggedObject.getLocalPosition(this.parent);
     this.position.x = (newPosition.x - this.startOffset.x);
     this.position.y = (newPosition.y - this.startOffset.y);
+
+    for (var i = 0, len = lines.length; i < len; i++) {
+      line = lines[i];
+      line.redraw();
+    }
   }
 }
 

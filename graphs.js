@@ -110,11 +110,7 @@ var l4 = Line(c4, c1);
 var l5 = Line(c1, c3);
 var l6 = Line(c2, c4);
 
-log(intersect(l1, l2));
-log(intersect(l1, l3));
-log(intersect(l2, l4));
-log(intersect(l3, l4));
-log(intersect(l5, l6));
+redrawLines();
 
 function onDragStart(event)
 {

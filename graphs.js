@@ -11,18 +11,24 @@ var stage = new PIXI.Container();
 
 stage.interactive = true;
 
-var graphics = new PIXI.Graphics();
 
-// draw a circle
-graphics.lineStyle(2, 0x0033cc);
-graphics.beginFill(0xffff66, 0.7);
-graphics.drawCircle(470, 200, radius=10);
-graphics.endFill();
+function Circle(x, y) {
+  var graphics = new PIXI.Graphics();
 
-stage.addChild(graphics);
+  // draw a circle
+  graphics.lineStyle(2, 0x0033cc);
+  graphics.beginFill(0xffff66, 0.7);
+  graphics.drawCircle(470, 200, radius=10);
+  graphics.endFill();
 
-graphics.position.x = 30
+  stage.addChild(graphics);
 
+  graphics.position.x = x;
+  graphics.position.y = y;
+  return graphics;
+}
+
+var circle = Circle(10, 60);
 
 // Just click on the stage to draw random lines
 stage.on('click', onClick);
@@ -40,6 +46,7 @@ function onClick()
 animate();
 
 function animate() {
-    renderer.render(stage);
-    requestAnimationFrame( animate );
+  circle.position.x = circle.position.x + 1;
+  renderer.render(stage);
+  requestAnimationFrame( animate );
 }

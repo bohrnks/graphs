@@ -49,13 +49,18 @@ function Line(node1, node2) {
   var line = new PIXI.Graphics();
   line.node1 = node1;
   line.node2 = node2;
+  line.intersect = false;
 
   lines.push(line);
 
   line.redraw = function() {
     line.clear();
-    // draw a line
-    line.lineStyle(3, 0x9900cc, 1);
+    if (line.intersect) {
+      var color = 0xff9933;
+    } else {
+      var color = 0x9900cc;
+    }
+    line.lineStyle(3, color, 1);
     line.moveTo(line.node1.position.x, line.node1.position.y)
     line.lineTo(line.node2.position.x, line.node2.position.y)
     line.endFill();
@@ -135,6 +140,31 @@ function onDragEnd()
   this.draggedObject = null;
 }
 
+function redrawLines() {
+  // Clear intersect flags
+  for (var i = 0, len = lines.length; i < len; i++) {
+    var line = lines[i];
+    line.intersect = false;
+  }
+
+  // Test lines for intersections
+  for (var i = 0, len = lines.length; i < len; i++) {
+    for (var j = i + 1, len = lines.length; j < len; j++) {
+      var line1 = lines[i];
+      var line2 = lines[j];
+      if (intersect(line1, line2)) {
+        line1.intersect = true;
+        line2.intersect = true;
+      }
+    }
+  }
+
+  for (var i = 0, len = lines.length; i < len; i++) {
+    var line = lines[i];
+    line.redraw();
+  }
+}
+
 function onDragMove()
 {
   if (this.dragging)
@@ -142,15 +172,9 @@ function onDragMove()
     var newPosition = this.draggedObject.getLocalPosition(this.parent);
     this.position.x = (newPosition.x - this.startOffset.x);
     this.position.y = (newPosition.y - this.startOffset.y);
-
-    for (var i = 0, len = lines.length; i < len; i++) {
-      line = lines[i];
-      line.redraw();
-    }
+    redrawLines();
   }
 }
-
-
 
 // run the render loop
 animate();

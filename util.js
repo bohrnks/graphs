@@ -1,3 +1,5 @@
+function log(x) { console.log(x) }
+
 function SortByZIndex(parent) {
   parent.children.sort(function(a,b) {
     a.zIndex = a.zIndex || 0;

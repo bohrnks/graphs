@@ -14,8 +14,8 @@ stage.interactive = true;
 var graphics = new PIXI.Graphics();
 
 // draw a circle
-graphics.lineStyle(0);
-graphics.beginFill(0xFFFF0B, 0.5);
+graphics.lineStyle(2, 0x0033cc);
+graphics.beginFill(0xffff66, 0.7);
 graphics.drawCircle(470, 200, radius=10);
 graphics.endFill();
 
@@ -23,13 +23,6 @@ stage.addChild(graphics);
 
 graphics.position.x = 30
 
-// let's create a moving shape
-var thing = new PIXI.Graphics();
-stage.addChild(thing);
-thing.position.x = 620/2;
-thing.position.y = 380/2;
-
-var count = 0;
 
 // Just click on the stage to draw random lines
 stage.on('click', onClick);

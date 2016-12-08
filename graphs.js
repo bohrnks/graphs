@@ -69,15 +69,47 @@ function Line(node1, node2) {
   return line;
 }
 
+function ccw(A,B,C) {
+  return (C.y-A.y) * (B.x-A.x) > (B.y-A.y) * (C.x-A.x);
+}
+
+// Return true if two lines intersect
+function intersect(line1, line2) {
+  // Get positions for line end points A, B, C, D
+  // Test segments AB and CD
+  var A = line1.node1.position;
+  var B = line1.node2.position;
+  var C = line2.node1.position;
+  var D = line2.node2.position;
+
+  // Special case: if end points are the same, no intersect
+  if (A == C ||
+      A == D ||
+      B == C ||
+      B == D) {
+    return false;
+  }
+
+  return ccw(A,C,D) != ccw(B,C,D) && ccw(A,B,C) != ccw(A,B,D);
+}
+
 var c1 = Circle(300, 300);
 var c2 = Circle(400, 300);
 var c3 = Circle(400, 400);
 var c4 = Circle(300, 400);
 
-Line(c1, c2);
-Line(c2, c3);
-Line(c3, c4);
-Line(c4, c1);
+var l1 = Line(c1, c2);
+var l2 = Line(c2, c3);
+var l3 = Line(c3, c4);
+var l4 = Line(c4, c1);
+var l5 = Line(c1, c3);
+var l6 = Line(c2, c4);
+
+log(intersect(l1, l2));
+log(intersect(l1, l3));
+log(intersect(l2, l4));
+log(intersect(l3, l4));
+log(intersect(l5, l6));
 
 function onDragStart(event)
 {

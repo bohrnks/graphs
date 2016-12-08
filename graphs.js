@@ -19,7 +19,7 @@ function Circle(x, y) {
   // draw a circle
   circle.lineStyle(2, 0x0033cc);
   circle.beginFill(0xffff66, 0.7);
-  circle.drawCircle(470, 200, radius=10);
+  circle.drawCircle(0, 0, radius=10);
   circle.endFill();
 
   container.position.x = x;
@@ -48,7 +48,9 @@ function Line(node1, node2) {
 
   log(11111);
   log(node1.toGlobal(new PIXI.Point()));
-  //log.node1.position;
+  log(node1.position);
+  log(node2.position);
+  log(node2.toGlobal(new PIXI.Point()));
 
   // draw a line
   line.lineStyle(3, 0x9900cc, 1);
@@ -56,12 +58,12 @@ function Line(node1, node2) {
   line.lineTo(node2.position.x, node2.position.y)
   line.endFill();
 
-  node1.addChild(line);
+  stage.addChild(line);
   return line;
 }
 
-var c1 = Circle(0, 0);
-var c2 = Circle(100, 0);
+var c1 = Circle(300, 300);
+var c2 = Circle(400, 300);
 
 var line = Line(c1, c2);
 

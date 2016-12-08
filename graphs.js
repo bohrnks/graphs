@@ -13,6 +13,7 @@ stage.interactive = true;
 
 
 function Circle(x, y) {
+  var container = new PIXI.Container();
   var circle = new PIXI.Graphics();
 
   // draw a circle
@@ -21,13 +22,14 @@ function Circle(x, y) {
   circle.drawCircle(470, 200, radius=10);
   circle.endFill();
 
-  circle.position.x = x;
-  circle.position.y = y;
+  container.position.x = x;
+  container.position.y = y;
 
-  stage.addChild(circle);
+  stage.addChild(container);
+  container.addChild(circle);
 
-  circle.interactive = true;
-  circle.on('mousedown', onDragStart)
+  container.interactive = true;
+  container.on('mousedown', onDragStart)
     .on('touchstart', onDragStart)
     // events for drag end
     .on('mouseup', onDragEnd)
@@ -38,7 +40,7 @@ function Circle(x, y) {
     .on('mousemove', onDragMove)
     .on('touchmove', onDragMove);
 
-  return circle;
+  return container;
 }
 
 function Line(node1, node2) {
@@ -46,7 +48,7 @@ function Line(node1, node2) {
 
   log(11111);
   log(node1.toGlobal(new PIXI.Point()));
-  log.node1.position;
+  //log.node1.position;
 
   // draw a line
   line.lineStyle(3, 0x9900cc, 1);

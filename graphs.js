@@ -5,7 +5,7 @@ document.body.appendChild(renderer.view);
 
 // create the root of the scene graph
 var stage = new PIXI.Container();
-
+stage.addChild(solveLabel);
 stage.interactive = true;
 
 // Global lists for nodes and edges (circles and lines)
@@ -20,6 +20,7 @@ function animate() {
   renderer.render(stage);
   requestAnimationFrame(animate);
 }
+
 
 // main
 CircleOfCircles(6);
@@ -36,6 +37,8 @@ AddLine(1, 4);
 AddLine(2, 5);
 
 redrawLines();
+
+
 
 // run the render loop
 animate();

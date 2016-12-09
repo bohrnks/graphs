@@ -8,10 +8,6 @@ var stage = new PIXI.Container();
 stage.addChild(solveLabel);
 stage.interactive = true;
 
-// Global lists for nodes and edges (circles and lines)
-var lines = []
-
-var circles = {}
 
 function animate() {
   //circle.position.x = circle.position.x + 1;

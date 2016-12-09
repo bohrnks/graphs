@@ -2,6 +2,7 @@ var circleCounter = 0;
 
 function Circle(x, y) {
   var container = new PIXI.Container();
+  container.edges = [];
   var circle = new PIXI.Graphics();
 
   // draw a circle
@@ -28,12 +29,12 @@ function Circle(x, y) {
     .on('mousemove', onDragMove)
     .on('touchmove', onDragMove);
 
-  container.idx = circleCounter;
+  container.label = circleCounter;
   circleCounter += 1;
 
-  circles[container.idx] = container;
+  circles[container.label] = container;
 
-  var label = new PIXI.Text(container.idx);
+  var label = new PIXI.Text(container.label);
   container.addChild(label);
   label.position.x = 10
   label.scale.x = 0.5;
@@ -44,8 +45,14 @@ function Circle(x, y) {
 
 function Line(node1, node2) {
   var line = new PIXI.Graphics();
+  line.label = '' + node1.label + '-' + node2.label;
+  node1.edges.push(line);
+  node2.edges.push(line);
   line.node1 = node1;
   line.node2 = node2;
+  // Aliases
+  line.A = node1;
+  line.B = node2;
   line.intersect = false;
 
   lines.push(line);

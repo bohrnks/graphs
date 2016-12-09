@@ -2,7 +2,9 @@ var circleCounter = 0;
 
 function Circle(x, y) {
   var container = new PIXI.Container();
-  container.edges = [];
+  // Map to neighbors.
+  // Key = neighboring node, value = edge.
+  container.edges = {};
   var circle = new PIXI.Graphics();
 
   // draw a circle
@@ -46,8 +48,8 @@ function Circle(x, y) {
 function Line(node1, node2) {
   var line = new PIXI.Graphics();
   line.label = '' + node1.label + '-' + node2.label;
-  node1.edges.push(line);
-  node2.edges.push(line);
+  node1.edges[node2.label] = line;
+  node2.edges[node1.label] = line;
   line.node1 = node1;
   line.node2 = node2;
   // Aliases

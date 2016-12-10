@@ -1,10 +1,10 @@
 var circleCounter = 0;
 
 function Circle(x, y) {
-  var container = new PIXI.Container();
+  var circleContainer = new PIXI.Container();
   // Map to neighbors.
   // Key = neighboring node, value = edge.
-  container.edges = {};
+  circleContainer.edges = {};
   var circle = new PIXI.Graphics();
 
   // draw a circle
@@ -13,14 +13,14 @@ function Circle(x, y) {
   circle.drawCircle(0, 0, radius=7);
   circle.endFill();
 
-  container.position.x = x;
-  container.position.y = y;
+  circleContainer.position.x = x;
+  circleContainer.position.y = y;
 
-  stage.addChild(container);
-  container.addChild(circle);
+  stage.addChild(circleContainer);
+  circleContainer.addChild(circle);
 
-  container.interactive = true;
-  container.on('mousedown', onDragStart)
+  circleContainer.interactive = true;
+  circleContainer.on('mousedown', onDragStart)
     .on('touchstart', onDragStart)
     // events for drag end
     .on('mouseup', onDragEnd)
@@ -31,18 +31,18 @@ function Circle(x, y) {
     .on('mousemove', onDragMove)
     .on('touchmove', onDragMove);
 
-  container.label = circleCounter;
+  circleContainer.label = '' + circleCounter;
   circleCounter += 1;
 
-  circles[container.label] = container;
+  circles[circleContainer.label] = circleContainer;
 
-  var label = new PIXI.Text(container.label);
-  container.addChild(label);
+  var label = new PIXI.Text(circleContainer.label);
+  circleContainer.addChild(label);
   label.position.x = 10
   label.scale.x = 0.5;
   label.scale.y = 0.5;
 
-  return container;
+  return circleContainer;
 }
 
 function Line(node1, node2) {

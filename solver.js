@@ -29,11 +29,14 @@ function findLoop(startNode) {
   var curNode = startNode;
   var curEdge = getEdge(startNode);
 
-  function findNextNode(curNode) {
-    for (var label in curNode.edges) {
-      log(label + ' -> ' + curNode.edges[label].label);
+  // Jump to the next node.
+  // 
+  function findNextNode(node) {
+    for (var label in node.edges) {
+      log(label + ' -> ' + node.edges[label].label);
       if (!seenNodesSet.has(label)) {
         seenNodesSet.add(label);
+        log(seenNodesSet);
         return label;
       }
     }
@@ -45,7 +48,7 @@ function findLoop(startNode) {
     nextLabel = findNextNode(curNode);
     var nextLabel = findNextNode(curNode);
     curNode = circles[nextLabel];
-  }  
+  }
 }
 
 function Solve() {
@@ -62,10 +65,9 @@ function Solve() {
 
   // var nextEdge = findNextEdge(edge);
   // log(nextEdge.label);
-    
+
 }
 
 var solveLabel = new PIXI.Text('SOLVE');
 solveLabel.interactive = true;
 solveLabel.on('mousedown', Solve);
-

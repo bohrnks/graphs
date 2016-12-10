@@ -19,8 +19,7 @@ function getEdge(node) {
   }
 }
 
-function findLoop() {
-  var startNode = lines[0].A;
+function findLoop(startNode) {
   var seenNodesSet = new Set();
   var seenEdges = [];
 
@@ -29,47 +28,30 @@ function findLoop() {
 
   var curNode = startNode;
   var curEdge = getEdge(startNode);
-  var nextNode = null;
-  if (curEdge.A == curNode) {
-    nextNode = curEdge.B;
-  } else {
-    nextNode = curEdge.A;
-  }
 
   function findNextNode(curNode) {
-    log('Neighbors of ' + curNode.label);
     for (var label in curNode.edges) {
       log(label + ' -> ' + curNode.edges[label].label);
       if (!seenNodesSet.has(label)) {
-        return label
+        seenNodesSet.add(label);
+        return label;
       }
-    }
-    var neighbor_labels = Object.keys(curNode.edges);
-    for (var i = 0; i < neighbor_labels.length; i ++ ) {
-      var next_label = neighbor_labels[i];
-      var node = circles[next_label];
-      return node;
     }
   }
 
-  curNode = findNextNode(curNode);
-  log('Next = ' + curNode.label);
-  if (seenNodesSet.has(curNode)) {
-    // Found a loop
-    log('Found loop');
-    log(seenNodes);
-    return seenNodes;
-  } else {
-    seenNodesSet.add(curNode);
-    //seenEdgesNodes.push(node);
-    log('Added node ' + curNode.label);
-  }
+  var nextLabel = findNextNode(curNode);
+  curNode = circles[nextLabel];
+  while (!!nextLabel) {
+    nextLabel = findNextNode(curNode);
+    var nextLabel = findNextNode(curNode);
+    curNode = circles[nextLabel];
+  }  
 }
 
 function Solve() {
   log('Solving!');
   // Find a loop
-  var loop = findLoop();
+  var loop = findLoop(lines[0].A);
   log(222222);
   log(loop);
 

@@ -21,25 +21,37 @@ function getEdge(node) {
 
 function findLoop(startNode) {
   var seenNodesSet = new Set();
-  var seenEdges = [];
+  var seenNodes = [];
 
-  seenNodesSet.add(startNode.label);
+  function addLabel(label) {
+    seenNodesSet.add(label);
+    seenNodes.push(label);
+    circles[label].highlight();
+  }
+  addLabel(startNode.label);
   log('Start = ' + startNode.label);
 
   var curNode = startNode;
   var curEdge = getEdge(startNode);
 
   // Jump to the next node.
-  // 
+  // TODO: Step() function that is called after a delay (setTimeout)
+  // Need to reorganize this code.
   function findNextNode(node) {
     for (var label in node.edges) {
       log(label + ' -> ' + node.edges[label].label);
       if (!seenNodesSet.has(label)) {
-        seenNodesSet.add(label);
-        log(seenNodesSet);
+
+        addLabel(label);
+        log(seenNodes);
+
         return label;
       }
     }
+  }
+
+  function checkLoop() {
+
   }
 
   var nextLabel = findNextNode(curNode);

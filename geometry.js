@@ -42,6 +42,15 @@ function Circle(x, y) {
   label.scale.x = 0.5;
   label.scale.y = 0.5;
 
+  circleContainer.highlight = function() {
+    circleContainer.scale.x = 1.2;
+    circleContainer.scale.y = 1.2;
+  }
+  circleContainer.unhighlight = function() {
+    circleContainer.scale.x = 1;
+    circleContainer.scale.y = 1;
+  }
+
   return circleContainer;
 }
 
